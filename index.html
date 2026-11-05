@@ -139,6 +139,205 @@
             color: #FFFFFF;
         }
 
+        /* ---------------- Hamburger & Mobile Drawer ---------------- */
+        .hamburger-btn {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 42px;
+            height: 42px;
+            padding: 9px 8px;
+            background: rgba(4, 120, 87, 0.08);
+            border: 1px solid rgba(4, 120, 87, 0.15);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 100%;
+            height: 2.5px;
+            background-color: var(--primary-dark);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover {
+            background: rgba(4, 120, 87, 0.14);
+        }
+
+        /* Drawer Backdrop */
+        .drawer-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(11, 19, 32, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .drawer-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Mobile Drawer Panel */
+        .mobile-drawer {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(340px, 84vw);
+            background: #FFFFFF;
+            z-index: 999;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.25);
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
+
+        .mobile-drawer.open {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 22px;
+            border-bottom: 1px solid rgba(4, 120, 87, 0.1);
+            background: #FAFCFB;
+        }
+
+        .drawer-header .brand img {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+        }
+
+        .drawer-header .brand-text h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            line-height: 1.1;
+        }
+
+        .drawer-header .brand-text span {
+            font-size: 10px;
+            color: var(--accent-gold);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .drawer-close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: #FFFFFF;
+            color: var(--text-muted);
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            line-height: 1;
+            transition: all 0.2s;
+        }
+
+        .drawer-close-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #DC2626;
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .drawer-body {
+            padding: 20px 16px;
+            flex: 1;
+        }
+
+        .drawer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .drawer-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 16px;
+            border-radius: 14px;
+            font-size: 15.5px;
+            font-weight: 600;
+            color: var(--text-title);
+            background: transparent;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .drawer-link:hover, .drawer-link:active {
+            background: rgba(4, 120, 87, 0.08);
+            color: var(--primary-dark);
+            transform: translateX(4px);
+        }
+
+        .drawer-icon {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: rgba(4, 120, 87, 0.08);
+        }
+
+        .drawer-footer {
+            padding: 20px 20px 28px 20px;
+            border-top: 1px solid rgba(4, 120, 87, 0.1);
+            background: #FAFCFB;
+        }
+
+        .drawer-cta-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #FFFFFF;
+            padding: 13px 18px;
+            border-radius: 14px;
+            font-size: 14.5px;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(4, 120, 87, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .drawer-cta-btn:active {
+            transform: scale(0.98);
+        }
+
+        .drawer-copyright {
+            margin-top: 12px;
+            font-size: 11.5px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
         /* ---------------- Hero Section ---------------- */
         .hero {
             position: relative;
@@ -628,6 +827,18 @@
 
         /* ---------------- Responsive ---------------- */
         @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger-btn {
+                display: flex;
+            }
+            .drawer-backdrop {
+                display: block;
+            }
+            .mobile-drawer {
+                display: flex;
+            }
             .hero-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -691,8 +902,66 @@
                     অ্যাপ পান
                 </a>
             </nav>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="মেনু খুলুন">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
+
+    <!-- Mobile Drawer & Backdrop -->
+    <div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+    <aside class="mobile-drawer" id="mobileDrawer" aria-label="মোবাইল নেভিগেশন ড্রয়ার">
+        <div class="drawer-header">
+            <div class="brand">
+                <img src="web-assets/app_icon.png" alt="আমার দ্বীন">
+                <div class="brand-text">
+                    <h2>আমার দ্বীন</h2>
+                    <span>AmarDeen App</span>
+                </div>
+            </div>
+            <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="মেনু বন্ধ করুন">
+                &times;
+            </button>
+        </div>
+
+        <div class="drawer-body">
+            <nav class="drawer-nav">
+                <a href="#features" class="drawer-link">
+                    <span class="drawer-icon">🕋</span>
+                    <span>ফিচারসমূহ</span>
+                </a>
+                <a href="#quran" class="drawer-link">
+                    <span class="drawer-icon">📖</span>
+                    <span>পবিত্র কুরআনুল কারীম</span>
+                </a>
+                <a href="#prayer" class="drawer-link">
+                    <span class="drawer-icon">🕌</span>
+                    <span>নামাজের সময়সূচি</span>
+                </a>
+                <a href="#qibla" class="drawer-link">
+                    <span class="drawer-icon">🧭</span>
+                    <span>কিবলা কম্পাস</span>
+                </a>
+                <a href="privacy-policy.html" class="drawer-link">
+                    <span class="drawer-icon">🛡️</span>
+                    <span>গোপনীয়তা নীতি (Privacy)</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="drawer-footer">
+            <a href="#download" class="drawer-cta-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                অ্যাপ পান (Google Play)
+            </a>
+            <p class="drawer-copyright">১০০% ফ্রি ও নিরাপদ ইসলামিক সহায়ক অ্যাপ</p>
+        </div>
+    </aside>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -964,6 +1233,45 @@
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Drawer Interactivity -->
+    <script>
+        (function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+            const mobileDrawer = document.getElementById('mobileDrawer');
+            const drawerBackdrop = document.getElementById('drawerBackdrop');
+            const drawerLinks = document.querySelectorAll('.drawer-link, .drawer-cta-btn');
+
+            function openDrawer() {
+                mobileDrawer.classList.add('open');
+                drawerBackdrop.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeDrawer() {
+                mobileDrawer.classList.remove('open');
+                drawerBackdrop.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', openDrawer);
+            if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
+            if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
+
+            drawerLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    closeDrawer();
+                });
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileDrawer && mobileDrawer.classList.contains('open')) {
+                    closeDrawer();
+                }
+            });
+        })();
+    </script>
 
 </body>
 </html>
