@@ -17,15 +17,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MuslimCompanion"
+        android:theme="@style/Theme.AmarDeen"
         android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true">
 
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-            android:theme="@style/Theme.MuslimCompanion">
+            android:theme="@style/Theme.AmarDeen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,7 +39,7 @@
             android:name=".receiver.PrayerAlarmReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.muslimcompanion.app.ACTION_PRAYER_ALARM" />
+                <action android:name="com.amardeen.islamicapp.ACTION_PRAYER_ALARM" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />

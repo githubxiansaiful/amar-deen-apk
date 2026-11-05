@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Muslim Companion"
+rootProject.name = "AmarDeen"
 include(":app")
