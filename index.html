@@ -1,143 +1,969 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - আমার দ্বীন (AmarDeen)</title>
+    <title>আমার দ্বীন (AmarDeen) — পূর্ণাঙ্গ ইসলামিক মোবাইল অ্যাপ</title>
+    <meta name="description" content="দৈনন্দিন ইসলামিক সহায়ক ও ইবাদতের আমল। পাঁচ ওয়াক্ত নামাজের নিখুঁত সময়, পূর্ণাঙ্গ আল-কুরআন, নির্ভুল কিবলা কম্পাস, যিকির ও দোয়ার সেরা ডিজিটাল সঙ্গী।">
+    <link rel="icon" type="image/png" href="web-assets/app_icon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary: #047857;
+            --primary-light: #10B981;
             --primary-dark: #064E3B;
-            --text-main: #1F2937;
-            --text-muted: #4B5563;
-            --bg: #F9FAFB;
-            --card-bg: #FFFFFF;
+            --primary-deep: #022E1F;
+            --accent-gold: #F59E0B;
+            --accent-gold-light: #FDE68A;
+            --bg-page: #F8FAF9;
+            --surface-card: #FFFFFF;
+            --text-title: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+            --border-light: rgba(4, 120, 87, 0.12);
+            --shadow-soft: 0 10px 30px -5px rgba(4, 120, 87, 0.08);
+            --shadow-float: 0 20px 40px -10px rgba(4, 120, 87, 0.15);
         }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.65;
-            color: var(--text-main);
-            background-color: var(--bg);
-            margin: 0;
-            padding: 24px 16px;
+            font-family: 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
         .container {
-            max-width: 820px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            padding: 0 24px;
         }
-        .header {
-            border-bottom: 2px solid #E5E7EB;
-            padding-bottom: 24px;
-            margin-bottom: 32px;
+
+        /* ---------------- Navbar ---------------- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(248, 250, 249, 0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 14px 0;
+            transition: all 0.3s ease;
         }
-        h1 {
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand img {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(4, 120, 87, 0.25);
+        }
+
+        .brand-text h1 {
+            font-size: 22px;
+            font-weight: 700;
             color: var(--primary-dark);
-            margin: 0 0 8px 0;
-            font-size: 28px;
+            line-height: 1.1;
         }
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin: 0;
+
+        .brand-text span {
+            font-size: 11px;
+            color: var(--accent-gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
-        h2 {
-            color: var(--primary);
-            font-size: 20px;
-            margin-top: 28px;
-            margin-bottom: 12px;
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
         }
-        p, li {
-            color: var(--text-muted);
+
+        .nav-link {
             font-size: 15px;
+            font-weight: 500;
+            color: var(--text-body);
+            transition: color 0.2s;
         }
-        ul {
-            padding-left: 20px;
+
+        .nav-link:hover {
+            color: var(--primary);
         }
-        li {
-            margin-bottom: 8px;
+
+        .btn-nav {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #FFFFFF;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(4, 120, 87, 0.3);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        .highlight-box {
-            background-color: #ECFDF5;
-            border-left: 4px solid var(--primary);
-            padding: 16px 20px;
-            border-radius: 8px;
-            margin: 20px 0;
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(4, 120, 87, 0.4);
+            color: #FFFFFF;
         }
-        .highlight-box p {
-            color: #065F46;
-            margin: 0;
+
+        /* ---------------- Hero Section ---------------- */
+        .hero {
+            position: relative;
+            padding: 60px 0 80px 0;
+            background: radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.09) 0%, transparent 60%),
+                        radial-gradient(circle at 15% 85%, rgba(245, 158, 11, 0.06) 0%, transparent 50%);
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 48px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(4, 120, 87, 0.08);
+            border: 1px solid rgba(4, 120, 87, 0.2);
+            color: var(--primary-dark);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13.5px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-gold);
+        }
+
+        .hero-title {
+            font-size: 46px;
+            font-weight: 700;
+            color: var(--text-title);
+            line-height: 1.25;
+            margin-bottom: 18px;
+        }
+
+        .hero-title .highlight {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 32px;
+            max-width: 580px;
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+
+        .btn-playstore {
+            background: #0F172A;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+            transition: all 0.2s;
+        }
+
+        .btn-playstore:hover {
+            transform: translateY(-2px);
+            background: #1E293B;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.35);
+        }
+
+        .btn-playstore svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .playstore-sub {
+            font-size: 11px;
+            opacity: 0.8;
+            font-weight: 400;
+            display: block;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .playstore-main {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .btn-secondary {
+            background: #FFFFFF;
+            border: 1px solid #E2E8F0;
+            color: var(--text-title);
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .hero-highlights {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            flex-wrap: wrap;
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
             font-weight: 500;
         }
-        .footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #E5E7EB;
+
+        .highlight-item svg {
+            color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ---------------- Phone Mockup ---------------- */
+        .mockup-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glow-aura {
+            position: absolute;
+            width: 320px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, rgba(245, 158, 11, 0.15) 50%, transparent 70%);
+            filter: blur(40px);
+            z-index: 1;
+        }
+
+        .phone-frame {
+            position: relative;
+            z-index: 2;
+            width: 290px;
+            border-radius: 42px;
+            background: #111827;
+            padding: 10px;
+            box-shadow: 0 25px 60px -15px rgba(6, 78, 59, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s ease;
+        }
+
+        .phone-frame:hover {
+            transform: translateY(-6px) scale(1.02);
+        }
+
+        .phone-screen {
+            border-radius: 34px;
+            overflow: hidden;
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #FFFFFF;
+        }
+
+        /* Floating Badges on Phone */
+        .badge-floating {
+            position: absolute;
+            z-index: 3;
+            background: #FFFFFF;
+            padding: 10px 16px;
+            border-radius: 16px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 13px;
-            color: #9CA3AF;
+            font-weight: 600;
+            color: var(--text-title);
+            border: 1px solid rgba(4, 120, 87, 0.15);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .badge-floating.left {
+            left: -24px;
+            bottom: 24%;
+            animation-delay: 0s;
+        }
+
+        .badge-floating.right {
+            right: -24px;
+            top: 22%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* ---------------- Features Section ---------------- */
+        .section-header {
             text-align: center;
+            max-width: 680px;
+            margin: 0 auto 56px auto;
+        }
+
+        .section-tag {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--text-title);
+            line-height: 1.3;
+            margin-bottom: 14px;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .features {
+            padding: 80px 0;
+            background: #FFFFFF;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .feature-card {
+            background: var(--bg-page);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 32px 26px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-float);
+            border-color: rgba(4, 120, 87, 0.3);
+            background: #FFFFFF;
+        }
+
+        .feature-icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(4, 120, 87, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-title);
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ---------------- Visual Feature Showcase ---------------- */
+        .showcase {
+            padding: 90px 0;
+            background: radial-gradient(circle at 50% 50%, rgba(4, 120, 87, 0.04) 0%, transparent 70%);
+        }
+
+        .showcase-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 90px;
+        }
+
+        .showcase-row:nth-child(even) {
+            direction: rtl;
+        }
+
+        .showcase-row:nth-child(even) .showcase-text {
+            direction: ltr;
+        }
+
+        .showcase-text h3 {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-title);
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+
+        .showcase-text p {
+            font-size: 16px;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .showcase-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 24px;
+        }
+
+        .showcase-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--text-title);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .showcase-list li svg {
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .showcase-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .showcase-card {
+            width: 270px;
+            border-radius: 36px;
+            background: #111827;
+            padding: 8px;
+            box-shadow: 0 20px 50px -10px rgba(4, 120, 87, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .showcase-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 30px;
+            display: block;
+        }
+
+        /* ---------------- Banner CTA ---------------- */
+        .cta-banner {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-deep) 0%, var(--primary-dark) 60%, var(--primary) 100%);
+            color: #FFFFFF;
+            border-radius: 32px;
+            margin: 60px 24px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.5);
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cta-banner h2 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #FFFFFF;
+        }
+
+        .cta-banner p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 36px auto;
+            opacity: 0.9;
+        }
+
+        /* ---------------- Footer ---------------- */
+        footer {
+            background: #0B1320;
+            color: #94A3B8;
+            padding: 60px 0 30px 0;
+            font-size: 14px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h4 {
+            color: #FFFFFF;
+            font-size: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand h4 img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .footer-brand p {
+            max-width: 360px;
+            line-height: 1.6;
+        }
+
+        .footer-links h5 {
+            color: #FFFFFF;
+            font-size: 16px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* ---------------- Responsive ---------------- */
+        @media (max-width: 968px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-title {
+                font-size: 36px;
+            }
+            .hero-subtitle {
+                margin: 0 auto 28px auto;
+            }
+            .hero-cta {
+                justify-content: center;
+            }
+            .hero-highlights {
+                justify-content: center;
+            }
+            .badge-floating {
+                display: none;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .showcase-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            .showcase-row:nth-child(even) {
+                direction: ltr;
+            }
+            .showcase-list li {
+                justify-content: center;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="brand">
+                <img src="web-assets/app_icon.png" alt="আমার দ্বীন অ্যাপ আইকন">
+                <div class="brand-text">
+                    <h1>আমার দ্বীন</h1>
+                    <span>AmarDeen</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#features" class="nav-link">ফিচারসমূহ</a>
+                <a href="#quran" class="nav-link">কুরআনুল কারীম</a>
+                <a href="#prayer" class="nav-link">নামাজের সময়</a>
+                <a href="#qibla" class="nav-link">কিবলা কম্পাস</a>
+                <a href="privacy-policy.html" class="nav-link">গোপনীয়তা নীতি</a>
+                <a href="#download" class="btn-nav">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    অ্যাপ পান
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    একটি সার্বিক নির্ভরযোগ্য ইসলামিক সহায়ক অ্যাপ
+                </div>
+                <h1 class="hero-title">
+                    দৈনন্দিন ইবাদতের সেরা সঙ্গী <span class="highlight">আমার দ্বীন</span>
+                </h1>
+                <p class="hero-subtitle">
+                    সহীহ সুন্নাহ ও নির্ভুল জ্যোতির্বৈজ্ঞানিক হিসেব অনুযায়ী পাঁচ ওয়াক্ত নামাজের সঠিক সময়, পূর্ণাঙ্গ আল-কুরআনুল কারীম, ইন্টারেক্টিভ কিবলা কম্পাস, যিকির ও আমলের এক অনন্য ডিজিটাল আয়োজন।
+                </p>
+
+                <div class="hero-cta" id="download">
+                    <a href="https://play.google.com/store/apps/details?id=com.amardeen.islamicapp" target="_blank" class="btn-playstore">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3.609 1.814L13.792 12 3.61 22.186a1.996 1.996 0 0 1-1.11-1.786V3.6a2 2 0 0 1 1.109-1.786zM15.207 13.414l2.586 2.586-12.82 7.371 10.234-9.957zm0-2.828L4.973.629l12.82 7.371-2.586 2.586zm1.414 1.414l3.586-2.071a1.5 1.5 0 0 1 0 2.6l-3.586 2.071v-2.6z"/>
+                        </svg>
+                        <div>
+                            <span class="playstore-sub">শীঘ্রই গুগল প্লে স্টোরে</span>
+                            <span class="playstore-main">Google Play</span>
+                        </div>
+                    </a>
+
+                    <a href="https://github.com/githubxiansaiful/amar-deen-apk/releases" target="_blank" class="btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        ডাউনলোড রিলিজ (.APK / .AAB)
+                    </a>
+                </div>
+
+                <div class="hero-highlights">
+                    <div class="highlight-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        ১০০% ফ্রি ও বিজ্ঞাপনমুক্ত
+                    </div>
+                    <div class="highlight-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        অফলাইন সাপোর্ট
+                    </div>
+                    <div class="highlight-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        কোনো ব্যক্তিগত ডেটা ট্র্যাকিং নেই
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup-wrapper">
+                <div class="glow-aura"></div>
+                
+                <div class="badge-floating left">
+                    <span style="font-size: 20px;">🕌</span>
+                    <div>
+                        <div>নামাজের ওয়াক্ত এলার্ট</div>
+                        <small style="color: var(--primary); font-size: 11px;">যথাসময়ে সালাত আদায়</small>
+                    </div>
+                </div>
+
+                <div class="badge-floating right">
+                    <span style="font-size: 20px;">🧭</span>
+                    <div>
+                        <div>নিখুঁত কিবলা কম্পাস</div>
+                        <small style="color: var(--accent-gold); font-size: 11px;">সরাসরি কাবার দিকনির্দেশ</small>
+                    </div>
+                </div>
+
+                <div class="phone-frame">
+                    <img src="web-assets/screen_home.png" alt="আমার দ্বীন হোম স্ক্রিন" class="phone-screen">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">ফিচারসমূহ</span>
+                <h2 class="section-title">দৈনন্দিন ইবাদত পালনে সবকিছু এক ছাদের নিচে</h2>
+                <p class="section-desc">প্রয়োজনীয় সকল ইসলামিক টুলস অত্যন্ত সহজ, সাবলীল ও আধুনিক ইন্টারফেসে সাজানো হয়েছে।</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-box">🕋</div>
+                    <h3>নামাজের সঠিক সময়সূচি</h3>
+                    <p>আপনার জিপিএস লোকেশন বা নির্বাচিত জেলা ভিত্তিক ফজর, যোহর, আসর, মাগরিব ও ইশার নিখুঁত সময় ও পরবর্তী ওয়াক্তের কাউন্টডাউন।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">📖</div>
+                    <h3>পূর্ণাঙ্গ আল-কুরআনুল কারীম</h3>
+                    <p>১১৪টি সূরার বিশুদ্ধ আরবি তিলাওয়াত, বাংলা উচ্চারণ, সহীহ অনুবাদ এবং চোখের সুরক্ষায় বুকমার্কিং ও রিডার থিম সুবিধা।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">🧭</div>
+                    <h3>রিয়েল-টাইম কিবলা কম্পাস</h3>
+                    <p>মোবাইলের ম্যাগনেটোমিটার সেন্সরের সাহায্যে পবিত্র কাবার সঠিক দিক ও দূরত্ব সরাসরি দিকনির্দেশনা সহ প্রদর্শিত হয়।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">📿</div>
+                    <h3>ডিজিটাল তাসবিহ কাউন্টার</h3>
+                    <p>মসৃণ ভাইব্রেশন ফিডব্যাক সহ সুবহানাল্লাহ, আলহামদুলিল্লাহ, আল্লাহু আকবার পাঠের জন্য আধুনিক ও দৃষ্টিনন্দন তাসবিহ।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">🤲</div>
+                    <h3>হাদিস ও মাসনুন দোয়া</h3>
+                    <p>দৈনন্দিন জীবন, ঘুম, ভ্রমণ, অসুস্থতা ও সালাত পরবর্তী সহীহ হাদিস ভিত্তিক প্রয়োজনীয় সকল দোয়ার নির্ভরযোগ্য সংকলন।</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">🌙</div>
+                    <h3>রমজান ও হিজরি ক্যালেন্ডার</h3>
+                    <p>সেহরি ও ইফতারের সময়সূচি, রমজানের বিশেষ আমল, এবং গুরুত্বপূর্ণ ইসলামিক ঐতিহাসিক দিবস সমূহের পূর্ণাঙ্গ ক্যালেন্ডার।</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Showcase 1: Prayer Schedule -->
+    <section class="showcase" id="prayer">
+        <div class="container">
+            <div class="showcase-row">
+                <div class="showcase-text">
+                    <span class="section-tag">ওয়াক্ত ক্যালকুলেশন</span>
+                    <h3>পাঁচ ওয়াক্ত সালাতের নির্ভুল সময় ও সতর্কবার্তা</h3>
+                    <p>রাসূলুল্লাহ ﷺ বলেছেন: 'সর্বোত্তম আমল হলো যথাসময়ে নামাজ আদায় করা।' আমার দ্বীন অ্যাপ আপনার ভৌগোলিক অবস্থান অনুযায়ী স্বয়ংক্রিয়ভাবে সালাতের নির্ভুল সময় নির্ণয় করে।</p>
+                    <ul class="showcase-list">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ইসলামিক ফাউন্ডেশন বাংলাদেশ ও আন্তর্জাতিক হিসাব পদ্ধতি সমর্থন
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            হানাফি ও শাফেয়ী উভয় মাযহাব অনুযায়ী আসরের ওয়াক্ত নির্ধারণ
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            প্রতিটি ওয়াক্তের শুরুতে নির্ভরযোগ্য নোটিফিকেশন সুবিধা
+                        </li>
+                    </ul>
+                </div>
+                <div class="showcase-visual">
+                    <div class="showcase-card">
+                        <img src="web-assets/screen_prayer.png" alt="নামাজের সময় স্ক্রিনশট">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Showcase 2: Quran -->
+            <div class="showcase-row" id="quran">
+                <div class="showcase-text">
+                    <span class="section-tag">আল-কুরআনুল কারীম</span>
+                    <h3>অর্থ ও উচ্চারণ সহ পবিত্র কুরআন পাঠের অনুভূতি</h3>
+                    <p>মুদ্রিত কুরআন মাজীদের চিরচেনা ফন্ট ও বিন্যাসে তিলাওয়াত করুন। কোনো জটিলতা ছাড়াই পছন্দের সূরায় সরাসরি প্রবেশ করুন এবং বুকমার্ক করে রাখুন।</p>
+                    <ul class="showcase-list">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ১১৪টি পূর্ণাঙ্গ সূরার মাক্কী ও মাদানী সূচিপত্র
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            বিশুদ্ধ আরবি পাঠ, বাংলা উচ্চারণ এবং প্রামাণ্য অনুবাদ
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            সম্পূর্ণ অফলাইনে পাঠযোগ্য, কোনো ইন্টারনেটের প্রয়োজন নেই
+                        </li>
+                    </ul>
+                </div>
+                <div class="showcase-visual">
+                    <div class="showcase-card">
+                        <img src="web-assets/screen_quran.png" alt="কুরআন সূচিপত্র স্ক্রিনশট">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Showcase 3: Qibla Compass -->
+            <div class="showcase-row" id="qibla">
+                <div class="showcase-text">
+                    <span class="section-tag">দিকনির্ণয়</span>
+                    <h3>নির্ভুল সেন্সর ভিত্তিক কিবলা কম্পাস</h3>
+                    <p>ভ্রমণে, নতুন স্থানে বা বাড়িতে—যেকোনো জায়গায় কাবা শরীফের সঠিক দিক মুহূর্তেই জেনে নিন। মসৃণ এবং অ্যানিমেটেড কম্পাস ইন্টারফেস আপনাকে দিক ভুল হতে দেবে না।</p>
+                    <ul class="showcase-list">
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            ডিভাইসের কম্পাস ও ম্যাগনেটিক ফিল্ডের সঠিক সমন্বয়
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            মক্কার দূরত্ব ও সঠিক কোণ (ডিগ্রি) রিয়েল-টাইমে গণনা
+                        </li>
+                        <li>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            সেন্সর না থাকলেও ম্যানুয়াল শহর নির্বাচনের বিকল্প
+                        </li>
+                    </ul>
+                </div>
+                <div class="showcase-visual">
+                    <div class="showcase-card">
+                        <img src="web-assets/screen_qibla.png" alt="কিবলা কম্পাস স্ক্রিনশট">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Call To Action Banner -->
     <div class="container">
-        <div class="header">
-            <h1>Privacy Policy</h1>
-            <p class="subtitle"><strong>Application:</strong> আমার দ্বীন (AmarDeen) &bull; <strong>Package ID:</strong> com.amardeen.islamicapp<br><strong>Last Updated:</strong> November 2026</p>
-        </div>
-
-        <div class="highlight-box">
-            <p>Summary: আমার দ্বীন (AmarDeen) is designed with user privacy as a fundamental priority. We do NOT collect, transmit, sell, or monetize any of your personal data. All your religious practices, bookmarks, and preferences remain solely on your device.</p>
-        </div>
-
-        <h2>1. Overview</h2>
-        <p>This Privacy Policy explains how <strong>আমার দ্বীন (AmarDeen)</strong> ("we", "our", or "the app") handles information when you use our mobile application on Android devices. We are committed to ensuring transparency and safeguarding user privacy.</p>
-
-        <h2>2. Data Collection and Usage</h2>
-        <p>The app does not require account registration or collect personally identifiable information (PII). Below are the device capabilities and data accessed by the app:</p>
-
-        <ul>
-            <li><strong>Location Data (Approximate and Precise):</strong> 
-                Used exclusively on-device to compute astronomical Islamic prayer times (Fajr, Dhuhr, Asr, Maghrib, Isha, Sunrise, Sahri/Iftar) and to calibrate the Qibla compass pointer toward the Holy Kaaba. Your GPS coordinates are processed locally and are <em>never</em> stored on remote servers, logged, or shared with third parties.
-            </li>
-            <li><strong>Notifications and Exact Alarms:</strong> 
-                Used solely to deliver scheduled Adhan and prayer reminders at the exact calculated times, even when the app is in the background or device has been restarted.
-            </li>
-            <li><strong>Device Sensors (Compass / Magnetometer / Accelerometer):</strong> 
-                Read in real-time to compute physical azimuth orientation for the interactive 3D Qibla direction compass. Sensor values are discarded immediately after calculation.
-            </li>
-            <li><strong>Vibration:</strong> 
-                Used to give tactile feedback during Digital Tasbih counter taps and alarm alerts.
-            </li>
-            <li><strong>Local Storage (DataStore Preferences):</strong> 
-                Your settings (such as selected city, calculation method, madhab, dark mode, saved Quranic surah bookmarks, and daily amal checklist progress) are stored locally in private application storage on your own device.
-            </li>
-        </ul>
-
-        <h2>3. Third-Party Services and Analytics</h2>
-        <p>The app contains <strong>no third-party advertising SDKs</strong>, tracking pixels, or data-broker integrations. Network access (Internet permission) is used strictly to stream audio recitations of the Holy Quran and fetch static content.</p>
-
-        <h2>4. Data Retention and Deletion</h2>
-        <p>Because we do not store your data on external servers, all your bookmarks, preferences, and local data can be cleared at any time by uninstalling the application or using Android's standard <em>Settings &rarr; Apps &rarr; আমার দ্বীন &rarr; Clear Storage</em>.</p>
-
-        <h2>5. Children's Privacy</h2>
-        <p>Our application is completely family-friendly and suitable for all age groups, including children. We do not knowingly collect any personal information from children under 13 (or under 16 where applicable by law).</p>
-
-        <h2>6. Security</h2>
-        <p>We implement industry-standard best practices. Since all sensitive preferences and computations occur locally in your device's isolated application sandbox, your data is shielded from unauthorized external access.</p>
-
-        <h2>7. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. Any revisions will be reflected on this page with an updated revision date.</p>
-
-        <h2>8. Contact Information</h2>
-        <p>If you have any questions, suggestions, or concerns regarding this Privacy Policy, please contact the developer team through your Google Play developer contact email or repository issue tracker.</p>
-
-        <div class="footer">
-            &copy; 2026 আমার দ্বীন (AmarDeen). All rights reserved.
+        <div class="cta-banner">
+            <h2>আজই যুক্ত হোন 'আমার দ্বীন'-এর সাথে</h2>
+            <p>আপনার মোবাইল ডিভাইসে একটি পরিচ্ছন্ন, বিজ্ঞাপনমুক্ত ও খাঁটি ইসলামিক আমলের পরিবেশ গড়ে তুলুন।</p>
+            <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                <a href="https://play.google.com/store/apps/details?id=com.amardeen.islamicapp" target="_blank" class="btn-playstore" style="background: #FFFFFF; color: #0F172A;">
+                    <svg viewBox="0 0 24 24" fill="#0F172A">
+                        <path d="M3.609 1.814L13.792 12 3.61 22.186a1.996 1.996 0 0 1-1.11-1.786V3.6a2 2 0 0 1 1.109-1.786zM15.207 13.414l2.586 2.586-12.82 7.371 10.234-9.957zm0-2.828L4.973.629l12.82 7.371-2.586 2.586zm1.414 1.414l3.586-2.071a1.5 1.5 0 0 1 0 2.6l-3.586 2.071v-2.6z"/>
+                    </svg>
+                    <div>
+                        <span class="playstore-sub">শীঘ্রই প্লে স্টোরে</span>
+                        <span class="playstore-main">Google Play</span>
+                    </div>
+                </a>
+                <a href="privacy-policy.html" class="btn-secondary" style="background: transparent; border-color: rgba(255,255,255,0.4); color: #FFFFFF;">
+                    গোপনীয়তা নীতি পড়ুন
+                </a>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h4>
+                        <img src="web-assets/app_icon.png" alt="আইকন">
+                        আমার দ্বীন (AmarDeen)
+                    </h4>
+                    <p>কুরআন, সহিহ হাদিস ও নির্ভরযোগ্য ইসলামিক স্কলারদের রেফারেন্স অনুযায়ী মুসলিমদের দৈনন্দিন ইবাদত, কুরআন পাঠ, দোয়া, যিকির ও আমল পরিচালনায় সহায়তা করাই এই অ্যাপের উদ্দেশ্য।</p>
+                </div>
+
+                <div class="footer-links">
+                    <h5>গুরুত্বপূর্ণ লিংক</h5>
+                    <ul>
+                        <li><a href="#features">ফিচারসমূহ</a></li>
+                        <li><a href="#prayer">নামাজের সময়সূচি</a></li>
+                        <li><a href="#quran">কুরআনুল কারীম</a></li>
+                        <li><a href="#qibla">কিবলা কম্পাস</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h5>আইনি ও যোগাযোগ</h5>
+                    <ul>
+                        <li><a href="privacy-policy.html">গোপনীয়তা নীতি (Privacy Policy)</a></li>
+                        <li><a href="https://github.com/githubxiansaiful/amar-deen-apk" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://github.com/githubxiansaiful/amar-deen-apk/releases" target="_blank">রিলিজ নোটস (.AAB / .APK)</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 আমার দ্বীন (AmarDeen) &bull; Package ID: <code>com.amardeen.islamicapp</code> &bull; সর্বস্বত্ব সংরক্ষিত।</p>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>
