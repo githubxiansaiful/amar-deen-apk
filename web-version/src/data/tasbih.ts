@@ -1,0 +1,68 @@
+import { PresetTasbih } from '@/lib/types';
+
+export const TASBIH_PRESETS: PresetTasbih[] = [
+  {
+    id: 'subhanallah',
+    arabic: 'سُبْحَانَ اللَّهِ',
+    nameBn: 'সুবহানাল্লাহ',
+    pronunciationBn: 'সুবহানাল্লাহ',
+    meaningBn: 'আল্লাহ পরম পবিত্র ও সকল ত্রুটি হতে মুক্ত।',
+    defaultTarget: 33,
+  },
+  {
+    id: 'alhamdulillah',
+    arabic: 'الْحَمْدُ لِلَّهِ',
+    nameBn: 'আলহামদুলিল্লাহ',
+    pronunciationBn: 'আলহামদুলিল্লাহ',
+    meaningBn: 'সমস্ত প্রশংসা একমাত্র আল্লাহর জন্য।',
+    defaultTarget: 33,
+  },
+  {
+    id: 'allahuakbar',
+    arabic: 'اللَّهُ أَكْبَرُ',
+    nameBn: 'আল্লাহু আকবার',
+    pronunciationBn: 'আল্লাহু আকবার',
+    meaningBn: 'আল্লাহ সর্বশ্রেষ্ঠ ও মহান।',
+    defaultTarget: 34,
+  },
+  {
+    id: 'lailahaillallah',
+    arabic: 'لَا إِلٰهَ إِلَّا اللَّهُ',
+    nameBn: 'লা ইলাহা ইল্লাল্লাহ',
+    pronunciationBn: 'লা ইলাহা ইল্লাল্লাহ',
+    meaningBn: 'আল্লাহ ছাড়া সত্য কোনো উপাস্য নেই।',
+    defaultTarget: 100,
+  },
+  {
+    id: 'astaghfirullah',
+    arabic: 'أَسْتَغْفِرُ اللَّهَ',
+    nameBn: 'আস্তাগফিরুল্লাহ',
+    pronunciationBn: 'আস্তাগফিরুল্লাহ',
+    meaningBn: 'আমি আল্লাহর নিকট ক্ষমা প্রার্থনা করছি।',
+    defaultTarget: 100,
+  },
+  {
+    id: 'durood',
+    arabic: 'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ',
+    nameBn: 'দরূদ শরীফ',
+    pronunciationBn: 'আল্লাহুম্মা সাল্লি আলা মুহাম্মাদ',
+    meaningBn: 'হে আল্লাহ! মুহাম্মাদ ﷺ এর প্রতি রহমত বর্ষণ করুন।',
+    defaultTarget: 100,
+  },
+  {
+    id: 'subhanallahi-wabihamdihi',
+    arabic: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+    nameBn: 'সুবহানাল্লাহি ওয়া বিহামদিহি',
+    pronunciationBn: 'সুবহানাল্লাহি ওয়া বিহামদিহি',
+    meaningBn: 'আল্লাহ পবিত্র এবং সমস্ত প্রশংসা কেবল তাঁরই জন্য।',
+    defaultTarget: 100,
+  },
+  {
+    id: 'la-hawla',
+    arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ',
+    nameBn: 'লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ',
+    pronunciationBn: 'লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ',
+    meaningBn: 'আল্লাহর সাহায্য ছাড়া কোনো উপায় নেই এবং কোনো শক্তি নেই। (জান্নাতের গুপ্তধন)',
+    defaultTarget: 100,
+  },
+];

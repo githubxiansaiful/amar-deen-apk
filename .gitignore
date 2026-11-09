@@ -124,6 +124,12 @@ $RECYCLE.BIN/
 .fuse_hidden*
 .directory
 
+# Web version
+node_modules/
+web-version/node_modules/
+web-version/.next/
+web-version/out/
+
 # ------------------------------------------------------------------------------
 # 8. Gradle Wrapper (Ensure wrapper binaries are NOT accidentally ignored)
 # ------------------------------------------------------------------------------

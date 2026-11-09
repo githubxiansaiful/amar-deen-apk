@@ -1,0 +1,17 @@
+{
+  "name": "আমার দ্বীন - Amar Deen",
+  "short_name": "Amar Deen",
+  "description": "নামাজ, কুরআন, কিবলা, তসবিহ ও দোয়া সহ সম্পূর্ণ ইসলামিক পোর্টাল",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#064e3b",
+  "theme_color": "#047857",
+  "icons": [
+    {
+      "src": "/app_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
