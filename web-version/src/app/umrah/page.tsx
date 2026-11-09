@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, CheckSquare, Square, Check, BookOpen, Lightbulb } from 'lucide-react';
+import Link from 'next/link';
+import { Sparkles, ArrowLeft, Check, Lightbulb } from 'lucide-react';
 import { UMRAH_STEPS, UMRAH_CHECKLIST } from '@/data/umrah';
 import { getStoredUmrahChecklist, toggleStoredUmrahChecklist } from '@/lib/storage';
 import { toBengaliDigits } from '@/lib/utils';
@@ -22,89 +23,92 @@ export default function UmrahPage() {
   const completedCount = Object.values(checklistState).filter(Boolean).length;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-          <span>পবিত্র উমরাহ ও হজ নির্দেশিকা</span>
+    <div className="max-w-2xl mx-auto px-4 py-4 sm:py-6 space-y-4 pb-24">
+      {/* 1. Header Card matching Android app */}
+      <div className="bg-white rounded-3xl p-5 border border-[#E6DFD3] shadow-xs flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <Link
+            href="/"
+            className="p-2 rounded-xl bg-[#FAF8F3] hover:bg-[#F3EFE6] border border-[#E6DFD3] text-[#2C2523] transition"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Link>
+          <div>
+            <h1 className="text-lg font-black text-[#2C2523]">উমরাহ নির্দেশিকা</h1>
+            <p className="text-[11px] text-[#6E615D] font-medium">৫টি ধারাবাহিক আমল ও ট্রাভেল চেকলিস্ট</p>
+          </div>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
-          সহজ উমরাহ গাইডলাইন
-        </h1>
-        <p className="text-sm sm:text-base text-gray-600 max-w-lg mx-auto">
-          রাসূলুল্লাহ ﷺ এর সুন্নাত অনুযায়ী উমরার ৫টি ধারাবাহিক আমল, প্রয়োজনীয় দোয়া ও ট্রাভেল চেকলিস্ট।
-        </p>
+
+        <div className="w-9 h-9 rounded-xl bg-[#ECFDF5] text-[#047857] flex items-center justify-center">
+          <Sparkles className="w-4 h-4" />
+        </div>
       </div>
 
-      {/* Tabs */}
+      {/* 2. Tabs */}
       <div className="flex justify-center">
-        <div className="inline-flex bg-gray-100 p-1.5 rounded-2xl">
+        <div className="inline-flex bg-white p-1 rounded-2xl border border-[#E6DFD3] shadow-2xs">
           <button
             onClick={() => setActiveTab('steps')}
-            className={`px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition cursor-pointer ${
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
               activeTab === 'steps'
-                ? 'bg-white text-emerald-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-[#047857] text-white shadow-xs'
+                : 'text-[#6E615D] hover:text-[#2C2523]'
             }`}
           >
-            উমরার ৫টি মূল ধাপ
+            উমরার ৫টি ধাপ
           </button>
           <button
             onClick={() => setActiveTab('checklist')}
-            className={`px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition cursor-pointer ${
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
               activeTab === 'checklist'
-                ? 'bg-white text-emerald-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-[#047857] text-white shadow-xs'
+                : 'text-[#6E615D] hover:text-[#2C2523]'
             }`}
           >
-            প্রয়োজনীয় মালামালের চেকলিস্ট ({toBengaliDigits(completedCount)}/{toBengaliDigits(UMRAH_CHECKLIST.length)})
+            চেকলিস্ট ({toBengaliDigits(completedCount)}/{toBengaliDigits(UMRAH_CHECKLIST.length)})
           </button>
         </div>
       </div>
 
-      {/* STEPS VIEW */}
+      {/* 3. Steps View */}
       {activeTab === 'steps' && (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {UMRAH_STEPS.map((step) => (
             <article
               key={step.id}
-              className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-xs space-y-4"
+              className="bg-white rounded-3xl p-5 sm:p-6 border border-[#E6DFD3] shadow-xs space-y-3"
             >
-              {/* Step Header */}
               <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-gray-900">
+                <h2 className="text-base sm:text-lg font-black text-[#2C2523]">
                   {step.titleBn}
                 </h2>
-                <div className="text-xs text-amber-700 font-semibold mt-0.5">
+                <span className="text-[11px] text-[#D97706] font-bold mt-0.5 block">
                   {step.subtitleBn}
-                </div>
+                </span>
               </div>
 
-              {/* Description */}
-              <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#2C2523] leading-relaxed">
                 {step.descBn}
               </p>
 
-              {/* Duas for this step */}
               {step.duas && step.duas.length > 0 && (
-                <div className="space-y-3 pt-2">
+                <div className="space-y-2 pt-1">
                   {step.duas.map((d, i) => (
                     <div
                       key={i}
-                      className="bg-emerald-50/60 rounded-2xl p-4 border border-emerald-100 space-y-2"
+                      className="bg-[#ECFDF5] rounded-2xl p-4 border border-[#047857]/20 space-y-2"
                     >
-                      <div className="text-right font-arabic text-xl sm:text-2xl text-emerald-950 leading-loose">
+                      <div className="text-right font-arabic text-2xl text-[#047857] leading-loose">
                         {d.arabic}
                       </div>
-                      <div className="text-xs text-gray-700">
-                        <strong className="text-amber-800 block text-[11px] mb-0.5">
+                      <div className="text-xs text-[#2C2523]">
+                        <strong className="text-[#D97706] block text-[10px] uppercase mb-0.5">
                           উচ্চারণ:
                         </strong>
                         {d.pronunciationBn}
                       </div>
-                      <div className="text-xs text-gray-900 font-medium">
-                        <strong className="text-emerald-800 block text-[11px] mb-0.5">
+                      <div className="text-xs text-[#2C2523]">
+                        <strong className="text-[#047857] block text-[10px] uppercase mb-0.5">
                           অর্থ:
                         </strong>
                         {d.meaningBn}
@@ -114,14 +118,13 @@ export default function UmrahPage() {
                 </div>
               )}
 
-              {/* Tips for this step */}
               {step.tips && step.tips.length > 0 && (
-                <div className="bg-amber-50/60 rounded-2xl p-4 border border-amber-100 text-xs text-amber-950 space-y-1.5">
-                  <div className="font-bold flex items-center space-x-1.5 text-amber-900 mb-1">
-                    <Lightbulb className="w-4 h-4 text-amber-600" />
-                    <span>বিশেষ সতর্কতা ও পরামর্শ:</span>
+                <div className="bg-[#FFFBEB] rounded-2xl p-3.5 border border-[#FDE68A] text-xs text-[#2C2523] space-y-1">
+                  <div className="font-bold flex items-center space-x-1.5 text-[#D97706] mb-0.5">
+                    <Lightbulb className="w-3.5 h-3.5" />
+                    <span>বিশেষ পরামর্শ:</span>
                   </div>
-                  <ul className="list-disc list-inside space-y-1">
+                  <ul className="list-disc list-inside space-y-0.5 text-[#6E615D]">
                     {step.tips.map((tip, idx) => (
                       <li key={idx}>{tip}</li>
                     ))}
@@ -133,24 +136,22 @@ export default function UmrahPage() {
         </div>
       )}
 
-      {/* CHECKLIST VIEW */}
+      {/* 4. Checklist View */}
       {activeTab === 'checklist' && (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-gray-100 space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+        <div className="bg-white rounded-3xl p-5 sm:p-6 border border-[#E6DFD3] shadow-xs space-y-3">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E6DFD3]/60">
             <div>
-              <h2 className="text-lg font-bold text-gray-900">
+              <h2 className="text-sm sm:text-base font-bold text-[#2C2523]">
                 উমরাহ যাত্রার সামগ্রী তালিকা
               </h2>
-              <p className="text-xs text-gray-500 mt-0.5">
-                আপনার ব্যাগে নেওয়া সামগ্রীগুলোতে টিক চিহ্ন দিন
-              </p>
+              <p className="text-[11px] text-[#8D7E7A]">ব্যাগে নেওয়া জিনিসে টিক দিন</p>
             </div>
-            <div className="text-xs font-bold px-3 py-1 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-100">
-              {toBengaliDigits(completedCount)} / {toBengaliDigits(UMRAH_CHECKLIST.length)} সম্পন্ন
-            </div>
+            <span className="text-xs font-bold px-2.5 py-1 bg-[#ECFDF5] text-[#047857] rounded-xl border border-[#047857]/20">
+              {toBengaliDigits(completedCount)} / {toBengaliDigits(UMRAH_CHECKLIST.length)}
+            </span>
           </div>
 
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-[#E6DFD3]/60">
             {UMRAH_CHECKLIST.map((item) => {
               const isChecked = Boolean(checklistState[item.id]);
 
@@ -158,28 +159,28 @@ export default function UmrahPage() {
                 <button
                   key={item.id}
                   onClick={() => handleToggleChecklist(item.id)}
-                  className="w-full py-3.5 flex items-center justify-between text-left hover:bg-gray-50 rounded-xl px-2 transition cursor-pointer"
+                  className="w-full py-3 flex items-center justify-between text-left hover:bg-[#FAF8F3] rounded-xl px-2 transition cursor-pointer"
                 >
                   <div className="flex items-center space-x-3">
                     <div
-                      className={`w-6 h-6 rounded-lg flex items-center justify-center border transition ${
+                      className={`w-5 h-5 rounded-md flex items-center justify-center border transition ${
                         isChecked
-                          ? 'bg-emerald-600 border-emerald-600 text-white'
-                          : 'border-gray-300 bg-white'
+                          ? 'bg-[#047857] border-[#047857] text-white'
+                          : 'border-[#CBD5E1] bg-white'
                       }`}
                     >
-                      {isChecked && <Check className="w-4 h-4" />}
+                      {isChecked && <Check className="w-3.5 h-3.5" />}
                     </div>
                     <span
-                      className={`text-sm ${
-                        isChecked ? 'line-through text-gray-400 font-normal' : 'text-gray-800 font-medium'
+                      className={`text-xs sm:text-sm ${
+                        isChecked ? 'line-through text-[#8D7E7A]' : 'text-[#2C2523] font-medium'
                       }`}
                     >
                       {item.titleBn}
                     </span>
                   </div>
 
-                  <span className="text-[11px] text-gray-400 bg-gray-50 px-2 py-0.5 rounded-md">
+                  <span className="text-[10px] text-[#8D7E7A] bg-[#FAF8F3] px-2 py-0.5 rounded-md border border-[#E6DFD3]">
                     {item.categoryBn}
                   </span>
                 </button>

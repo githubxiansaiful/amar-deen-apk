@@ -1,23 +1,28 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
-  Clock,
   MapPin,
   Calendar,
+  Settings,
   Sparkles,
-  AlertCircle,
-  ChevronDown,
-  Info,
+  AlertTriangle,
 } from 'lucide-react';
-import { calculatePrayerSchedule, calculateNaflTimes, calculateMonthSchedule } from '@/lib/prayer';
-import { getStoredCity, getStoredMadhab, getStoredCalcMethod } from '@/lib/storage';
+import {
+  calculatePrayerSchedule,
+  calculateNaflTimes,
+  calculateMonthSchedule,
+  getCalculationParameters,
+} from '@/lib/prayer';
+import { getStoredCity, setStoredCity, getStoredMadhab, getStoredCalcMethod } from '@/lib/storage';
 import { CityOption, DayPrayerSchedule } from '@/lib/types';
+import NamajTimeHeroCard from '@/components/NamajTimeHeroCard';
+import SectionHeader from '@/components/SectionHeader';
 import PrayerTimesTable from '@/components/PrayerTimesTable';
 import CitySelectorModal from '@/components/CitySelectorModal';
 import { toBengaliDigits } from '@/lib/utils';
 import { Coordinates, PrayerTimes } from 'adhan';
-import { getCalculationParameters } from '@/lib/prayer';
 import { DEFAULT_CITY } from '@/data/cities';
 
 const MONTH_NAMES_BN = [
@@ -84,91 +89,101 @@ export default function PrayerPage() {
   }, [selectedMonth, selectedYear]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-gray-200">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight flex items-center space-x-2">
-            <Clock className="w-7 h-7 text-emerald-600" />
-            <span>নামাজের স্থায়ী ও নির্ভুল সময়সূচি</span>
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            বাংলাদেশের ৬৪ জেলা ও আন্তর্জাতিক সময়ের সঠিক গণনা পদ্ধতি অনুযায়ী
-          </p>
-        </div>
-
-        <button
-          onClick={() => setIsCityModalOpen(true)}
-          className="flex items-center space-x-2 px-4 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-2xl text-sm font-semibold transition shadow-xs self-start sm:self-auto cursor-pointer"
-        >
-          <MapPin className="w-4 h-4 text-amber-300" />
-          <span>{city.nameBn} ({city.districtBn}) পরিবর্তন</span>
-        </button>
-      </div>
-
-      {/* Main Prayer Schedule Table */}
+    <div className="max-w-2xl mx-auto px-4 py-4 sm:py-6 space-y-4 pb-24">
+      {/* 1. Top Bar: [ 📍 ঢাকা ⌵ ]   [ 📅 ১৮ অক্টোবর ]   [ ⚙ পদ্ধতি ] */}
       {schedule && (
-        <PrayerTimesTable
-          prayers={schedule.prayers}
-          forbiddenTimes={schedule.forbiddenTimes}
-        />
+        <div className="flex items-center justify-between gap-2">
+          {/* Location Pill */}
+          <button
+            onClick={() => setIsCityModalOpen(true)}
+            className="px-3.5 py-2 bg-white hover:bg-[#FAF8F3] border border-[#E6DFD3] rounded-2xl text-xs sm:text-sm font-bold text-[#047857] transition shadow-xs flex items-center space-x-1 cursor-pointer"
+          >
+            <span>📍 {city.nameBn} ⌵</span>
+          </button>
+
+          {/* Date Pill */}
+          <div className="px-3 py-2 bg-white border border-[#E6DFD3] rounded-2xl text-xs font-semibold text-[#2C2523] shadow-xs flex items-center space-x-1.5">
+            <span>📅 {schedule.gregorianFormatted.split(',')[1] || schedule.gregorianFormatted}</span>
+          </div>
+
+          {/* Settings Pill */}
+          <Link
+            href="/settings"
+            className="px-3 py-2 bg-white hover:bg-[#FAF8F3] border border-[#E6DFD3] rounded-2xl text-xs font-bold text-[#2C2523] transition shadow-xs flex items-center space-x-1.5 cursor-pointer"
+          >
+            <Settings className="w-3.5 h-3.5 text-[#6E615D]" />
+            <span>পদ্ধতি</span>
+          </Link>
+        </div>
       )}
 
-      {/* Nafl Prayer Timings (নফল নামাজ) */}
-      <section className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-gray-100">
-        <div className="flex items-center space-x-2 text-emerald-900 font-bold text-lg mb-4">
-          <Sparkles className="w-5 h-5 text-amber-500" />
-          <h2>নফল সালাতের সুনির্দিষ্ট সময় ও ফজিলত</h2>
-        </div>
-        <p className="text-xs text-gray-500 mb-6">
-          ফরজ নামাজের পাশাপাশি নফল সালাতের মাধ্যমে আল্লাহর নৈকট্য লাভ এবং গুনাহ মাফ হয়:
-        </p>
+      {/* 2. Namaj Time Hero Card (Exact Mosque Silhouette & Celestial Arc) */}
+      {schedule && <NamajTimeHeroCard schedule={schedule} />}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* 3. Fard Prayers Section */}
+      <div className="pt-2">
+        <SectionHeader
+          title="ফরজ নামাজ"
+          accentColor="#047857"
+          subtitle="আজকের ৫ ওয়াক্ত সালাত"
+        />
+        <div className="mt-2">
+          {schedule && (
+            <PrayerTimesTable
+              prayers={schedule.prayers}
+              forbiddenTimes={schedule.forbiddenTimes}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* 4. Nafl Prayers Section */}
+      <div className="pt-2">
+        <SectionHeader
+          title="নফল নামাজ"
+          accentColor="#3B82F6"
+          subtitle="অতিরিক্ত সাওয়াবের সালাত"
+        />
+        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
           {naflTimes.map((item, idx) => (
             <div
               key={idx}
-              className="bg-emerald-50/50 rounded-2xl p-5 border border-emerald-100/80 flex flex-col justify-between"
+              className="bg-white rounded-3xl p-4 border border-[#E6DFD3] shadow-xs flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-base text-gray-900">{item.nameBn}</h3>
-                  <span className="text-xs font-semibold px-2.5 py-1 bg-white rounded-lg text-emerald-800 border border-emerald-200">
+                  <h3 className="font-bold text-sm text-[#2C2523]">{item.nameBn}</h3>
+                  <span className="text-[11px] font-bold px-2 py-0.5 bg-[#ECFDF5] text-[#047857] rounded-lg">
                     {item.rakat}
                   </span>
                 </div>
-                <div className="text-lg font-extrabold text-emerald-700 my-2">
+                <div className="text-base font-extrabold text-[#047857] my-1">
                   {item.timeFormatted}
                 </div>
               </div>
-              <p className="text-xs text-gray-600 leading-relaxed pt-2 border-t border-emerald-100">
+              <p className="text-[11px] text-[#6E615D] pt-2 border-t border-[#E6DFD3]/60 leading-tight">
                 {item.virtue}
               </p>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* Monthly Prayer Calendar */}
-      <section className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-gray-100 space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center space-x-2">
-              <Calendar className="w-5 h-5 text-emerald-600" />
-              <span>
+      {/* 5. Monthly Prayer Calendar */}
+      <div className="pt-2">
+        <div className="bg-white rounded-3xl p-5 border border-[#E6DFD3] shadow-xs space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Calendar className="w-5 h-5 text-[#047857]" />
+              <h2 className="text-base font-bold text-[#2C2523]">
                 {MONTH_NAMES_BN[selectedMonth]} {toBengaliDigits(selectedYear)} - মাসিক ক্যালেন্ডার
-              </span>
-            </h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              নির্বাচিত জেলার জন্য পূর্ণ মাসের নামাজের সময়সূচি
-            </p>
-          </div>
+              </h2>
+            </div>
 
-          <div className="flex items-center space-x-2">
             <select
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(Number(e.target.value))}
-              className="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-emerald-600"
+              className="px-2.5 py-1.5 bg-[#FAF8F3] border border-[#E6DFD3] rounded-xl text-xs font-bold text-[#2C2523]"
             >
               {MONTH_NAMES_BN.map((m, idx) => (
                 <option key={idx} value={idx}>
@@ -177,55 +192,52 @@ export default function PrayerPage() {
               ))}
             </select>
           </div>
-        </div>
 
-        {/* Responsive Table */}
-        <div className="overflow-x-auto rounded-2xl border border-gray-100">
-          <table className="w-full text-left text-xs divide-y divide-gray-100">
-            <thead className="bg-emerald-900 text-white font-semibold">
-              <tr>
-                <th className="px-3 py-3 text-center">তারিখ</th>
-                <th className="px-3 py-3">ফজর</th>
-                <th className="px-3 py-3">সূর্যোদয়</th>
-                <th className="px-3 py-3">যোহর</th>
-                <th className="px-3 py-3">আসর</th>
-                <th className="px-3 py-3">মাগরিব (ইফতার)</th>
-                <th className="px-3 py-3">ইশা</th>
-                <th className="px-3 py-3">সেহরি শেষ</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 bg-white">
-              {monthlyData.map((row) => {
-                const isToday =
-                  todayDay === row.day &&
-                  todayMonth === selectedMonth;
+          <div className="overflow-x-auto rounded-2xl border border-[#E6DFD3]">
+            <table className="w-full text-left text-xs divide-y divide-[#E6DFD3]">
+              <thead className="bg-[#FAF8F3] text-[#2C2523] font-bold">
+                <tr>
+                  <th className="px-2.5 py-2.5 text-center">তারিখ</th>
+                  <th className="px-2 py-2.5">ফজর</th>
+                  <th className="px-2 py-2.5">সূর্যোদয়</th>
+                  <th className="px-2 py-2.5">যোহর</th>
+                  <th className="px-2 py-2.5">আসর</th>
+                  <th className="px-2 py-2.5">মাগরিব</th>
+                  <th className="px-2 py-2.5">ইশা</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E6DFD3]/60 bg-white">
+                {monthlyData.map((row) => {
+                  const isToday =
+                    todayDay === row.day &&
+                    todayMonth === selectedMonth;
 
-                return (
-                  <tr
-                    key={row.day}
-                    className={`transition ${
-                      isToday
-                        ? 'bg-amber-50 font-bold text-amber-950'
-                        : 'hover:bg-gray-50 text-gray-700'
-                    }`}
-                  >
-                    <td className="px-3 py-2.5 text-center font-bold">
-                      {toBengaliDigits(row.day)} {isToday && '★'}
-                    </td>
-                    <td className="px-3 py-2.5">{row.fajr}</td>
-                    <td className="px-3 py-2.5 text-gray-400">{row.sunrise}</td>
-                    <td className="px-3 py-2.5">{row.dhuhr}</td>
-                    <td className="px-3 py-2.5">{row.asr}</td>
-                    <td className="px-3 py-2.5 font-bold text-emerald-800">{row.maghrib}</td>
-                    <td className="px-3 py-2.5">{row.isha}</td>
-                    <td className="px-3 py-2.5 text-gray-500">{row.sahurEnd}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                  return (
+                    <tr
+                      key={row.day}
+                      className={`transition ${
+                        isToday
+                          ? 'bg-[#ECFDF5] font-bold text-[#047857]'
+                          : 'hover:bg-[#FAF8F3] text-[#2C2523]'
+                      }`}
+                    >
+                      <td className="px-2.5 py-2 text-center font-bold">
+                        {toBengaliDigits(row.day)} {isToday && '★'}
+                      </td>
+                      <td className="px-2 py-2">{row.fajr}</td>
+                      <td className="px-2 py-2 text-[#8D7E7A]">{row.sunrise}</td>
+                      <td className="px-2 py-2">{row.dhuhr}</td>
+                      <td className="px-2 py-2">{row.asr}</td>
+                      <td className="px-2 py-2 font-bold text-[#047857]">{row.maghrib}</td>
+                      <td className="px-2 py-2">{row.isha}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </section>
+      </div>
 
       {/* City Selector Modal */}
       <CitySelectorModal
@@ -234,6 +246,7 @@ export default function PrayerPage() {
         selectedCity={city}
         onSelectCity={(newCity) => {
           setCity(newCity);
+          setStoredCity(newCity.id);
           loadData();
         }}
       />

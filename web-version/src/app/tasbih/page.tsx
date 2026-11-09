@@ -1,54 +1,46 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, Heart, Info, CheckCircle2 } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowLeft, Sparkles, Heart } from 'lucide-react';
 import TasbihCounter from '@/components/TasbihCounter';
 
 export default function TasbihPage() {
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 space-y-8">
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-purple-50 text-purple-800 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>জিকির ও ইস্তিগফার</span>
+    <div className="max-w-2xl mx-auto px-4 py-4 sm:py-6 space-y-4 pb-24">
+      {/* 1. Header Card matching Android app */}
+      <div className="bg-white rounded-3xl p-5 border border-[#E6DFD3] shadow-xs flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <Link
+            href="/"
+            className="p-2 rounded-xl bg-[#FAF8F3] hover:bg-[#F3EFE6] border border-[#E6DFD3] text-[#2C2523] transition"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Link>
+          <div>
+            <h1 className="text-lg font-black text-[#2C2523]">ডিজিটাল তাসবিহ</h1>
+            <p className="text-[11px] text-[#6E615D] font-medium">জিকির ও ইস্তিগফার কাউন্টার</p>
+          </div>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
-          ডিজিটাল তাসবিহ কাউন্টার
-        </h1>
-        <p className="text-sm sm:text-base text-gray-600 max-w-lg mx-auto">
-          ফরজ নামাজের পরবর্তী মাসনূন তাসবিহ (সুবহানাল্লাহ, আলহামদুলিল্লাহ, আল্লাহু আকবার) এবং প্রতিদিনের বরকতময় দরূদ ও ইস্তিগফার।
-        </p>
+
+        <div className="w-9 h-9 rounded-xl bg-[#ECFDF5] text-[#047857] flex items-center justify-center">
+          <Sparkles className="w-4 h-4" />
+        </div>
       </div>
 
-      {/* Main Counter */}
+      {/* 2. Main Counter */}
       <TasbihCounter />
 
-      {/* Virtues Section */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-gray-100 space-y-4">
-        <h2 className="text-lg font-bold text-gray-900 flex items-center space-x-2">
-          <Heart className="w-5 h-5 text-emerald-600" />
+      {/* 3. Virtues Card */}
+      <div className="bg-white rounded-3xl p-5 border border-[#E6DFD3] shadow-xs space-y-3">
+        <h2 className="text-sm font-bold text-[#2C2523] flex items-center space-x-1.5">
+          <Heart className="w-4 h-4 text-[#047857]" />
           <span>দৈনিক জিকিরের বিশেষ ফজিলত</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-gray-600">
-          <div className="p-4 bg-emerald-50/50 rounded-2xl border border-emerald-100">
-            <h3 className="font-bold text-emerald-900 mb-1">
-              ফরজ সালাত পরবর্তী তাসবিহ
-            </h3>
-            <p className="leading-relaxed">
-              রাসূলুল্লাহ ﷺ বলেছেন: যে ব্যক্তি প্রতি নামাজের পর ৩৩ বার সুবহানাল্লাহ, ৩৩ বার আলহামদুলিল্লাহ, ৩৪ বার আল্লাহু আকবার পাঠ করে—তার পূর্ববর্তী সমস্ত সগিরা গুনাহ ক্ষমা করে দেওয়া হয়। (সহিহ মুসলিম)।
-            </p>
-          </div>
-
-          <div className="p-4 bg-amber-50/50 rounded-2xl border border-amber-100">
-            <h3 className="font-bold text-amber-900 mb-1">
-              সুবহানাল্লাহি ওয়া বিহামদিহি
-            </h3>
-            <p className="leading-relaxed">
-              প্রতিদিন ১০০ বার &quot;সুবহানাল্লাহি ওয়া বিহামদিহি&quot; পাঠ করলে সাগরের ফেনা সমতুল্য গুনাহ থাকলেও আল্লাহ তা মাফ করে দেন। (সহিহ বুখারি)।
-            </p>
-          </div>
+        <div className="p-3 bg-[#ECFDF5] rounded-2xl border border-[#047857]/20 text-xs text-[#2C2523] leading-relaxed">
+          <strong className="text-[#047857] block mb-0.5">ফরজ সালাত পরবর্তী তাসবিহ:</strong>
+          প্রতি ফরজ সালাতের পর ৩৩ বার সুবহানাল্লাহ, ৩৩ বার আলহামদুলিল্লাহ, ৩৪ বার আল্লাহু আকবার পাঠে পূর্বের সগিরা গুনাহ ক্ষমা হয়ে যায়। (সহিহ মুসলিম)।
         </div>
       </div>
     </div>

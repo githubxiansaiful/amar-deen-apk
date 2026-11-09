@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import { Hind_Siliguri, Amiri } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import BottomNavBar from '@/components/BottomNavBar';
 import Footer from '@/components/Footer';
 
 const hindSiliguri = Hind_Siliguri({
@@ -20,9 +21,9 @@ const amiri = Amiri({
 });
 
 export const metadata: Metadata = {
-  title: 'আমার দ্বীন - Amar Deen | নামাজের সময়সূচি, কুরআন ও ইসলামিক পোর্টাল',
+  title: 'আমার দ্বীন - Amar Deen | দৈনন্দিন ইসলামিক পোর্টাল',
   description:
-    'বাংলাদেশের ৬৪ জেলা ও আন্তর্জাতিক শহরের নির্ভুল নামাজের সময়সূচি, সম্পূর্ণ ১১৪ সূরা বাংলা অনুবাদ ও অডিও তেলাওয়াত, কিবলা কম্পাস, ডিজিটাল তাসবিহ ও সহিহ মাসনূন দোয়া। সম্পূর্ণ বিজ্ঞাপনমুক্ত।',
+    'বাংলাদেশের ৬৪ জেলা ও আন্তর্জাতিক শহরের নির্ভুল নামাজের সময়সূচি, সম্পূর্ণ ১১৪ সূরা বাংলা উচ্চারণ ও অর্থ সহ কুরআন, কিবলা কম্পাস, ডিজিটাল তাসবিহ ও মাসনূন দোয়া।',
   manifest: '/manifest.json',
   icons: {
     icon: '/app_icon.png',
@@ -43,11 +44,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn" className={`${hindSiliguri.variable} ${amiri.variable}`}>
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased font-bengali">
-        <Suspense fallback={<div className="h-16 sm:h-20 bg-white border-b border-gray-100" />}>
+      <body className="min-h-screen flex flex-col bg-[#FAF8F3] text-[#2C2523] antialiased font-bengali">
+        <Suspense fallback={<div className="h-16 bg-[#FAF8F3] border-b border-[#E6DFD3]" />}>
           <Navbar />
         </Suspense>
-        <main className="flex-1">{children}</main>
+
+        <main className="flex-1 pb-16">{children}</main>
+
+        <Suspense fallback={null}>
+          <BottomNavBar />
+        </Suspense>
+
         <Footer />
       </body>
     </html>

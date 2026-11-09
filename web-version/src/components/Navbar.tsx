@@ -15,8 +15,6 @@ import {
   X,
   MapPin,
   Settings,
-  HelpCircle,
-  Award,
 } from 'lucide-react';
 import { CityOption } from '@/lib/types';
 import { getStoredCity, setStoredCity } from '@/lib/storage';
@@ -58,33 +56,33 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+      <header className="sticky top-0 z-40 bg-[#FAF8F3]/95 backdrop-blur-md border-b border-[#E6DFD3]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden shadow-xs border border-emerald-600/20 group-hover:scale-105 transition">
+            <Link href="/" className="flex items-center space-x-2.5 group">
+              <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-xs border border-[#E6DFD3] group-hover:scale-105 transition">
                 <Image
                   src="/app_icon.png"
-                  alt="Amar Deen Logo"
+                  alt="আমার দ্বীন"
                   fill
-                  sizes="48px"
+                  sizes="36px"
                   className="object-cover"
                   priority
                 />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-bold text-emerald-900 tracking-tight leading-tight">
+                <span className="text-xl font-black text-[#2C2523] tracking-tight leading-none">
                   আমার দ্বীন
                 </span>
-                <span className="text-[10px] sm:text-xs text-amber-600 font-medium">
-                  দৈনন্দিন ইসলামিক সঙ্গী
+                <span className="text-[10px] text-[#D97706] font-bold mt-0.5">
+                  Amar Deen
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+            <nav className="hidden md:flex items-center space-x-1">
               {NAV_LINKS.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -92,111 +90,40 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center space-x-1.5 px-3 py-2 rounded-xl text-sm font-medium transition ${
+                    className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition ${
                       isActive
-                        ? 'bg-emerald-50 text-emerald-800 font-semibold shadow-xs'
-                        : 'text-gray-600 hover:text-emerald-700 hover:bg-gray-50'
+                        ? 'bg-[#047857] text-white shadow-xs'
+                        : 'text-[#6E615D] hover:text-[#2C2523] hover:bg-white'
                     }`}
                   >
-                    <Icon
-                      className={`w-4 h-4 ${
-                        isActive ? 'text-emerald-700' : 'text-gray-400'
-                      }`}
-                    />
+                    <Icon className="w-3.5 h-3.5" />
                     <span>{link.label}</span>
                   </Link>
                 );
               })}
             </nav>
 
-            {/* City Selector Button & More */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* City Selector Button & Settings */}
+            <div className="flex items-center space-x-2">
               <button
                 onClick={() => setIsCityModalOpen(true)}
-                className="flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl text-xs sm:text-sm font-medium border border-emerald-200/60 transition shadow-xs cursor-pointer"
+                className="flex items-center space-x-1.5 px-3 py-1.5 bg-white hover:bg-[#FAF8F3] text-[#047857] rounded-xl text-xs font-bold border border-[#E6DFD3] transition shadow-xs cursor-pointer"
                 title="স্থান পরিবর্তন করুন"
               >
-                <MapPin className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="font-semibold">{currentCity.nameBn}</span>
+                <MapPin className="w-3.5 h-3.5 text-[#047857]" />
+                <span>{currentCity.nameBn}</span>
               </button>
 
               <Link
                 href="/settings"
-                className="hidden sm:flex p-2 rounded-xl text-gray-500 hover:text-emerald-800 hover:bg-gray-50 transition"
+                className="p-2 rounded-xl text-[#6E615D] hover:text-[#2C2523] hover:bg-white transition"
                 title="সেটিংস"
               >
-                <Settings className="w-5 h-5" />
+                <Settings className="w-4 h-4" />
               </Link>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-xl text-gray-700 hover:bg-gray-100 transition focus:outline-hidden"
-                aria-label="মোবাইল মেনু খুলুন"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </button>
             </div>
           </div>
         </div>
-
-        {/* Mobile Slide-out Drawer / Dropdown */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-100 bg-white/98 backdrop-blur-lg px-4 pt-3 pb-6 shadow-xl animate-in slide-in-from-top duration-200">
-            <div className="space-y-1">
-              {NAV_LINKS.map((link) => {
-                const Icon = link.icon;
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
-                      isActive
-                        ? 'bg-emerald-600 text-white font-semibold'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span>{link.label}</span>
-                  </Link>
-                );
-              })}
-
-              <div className="pt-2 border-t border-gray-100 mt-2">
-                <Link
-                  href="/knowledge"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50"
-                >
-                  <Award className="w-5 h-5 text-emerald-600" />
-                  <span>ইসলামিক জ্ঞান ও শিক্ষা</span>
-                </Link>
-                <Link
-                  href="/umrah"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50"
-                >
-                  <Sparkles className="w-5 h-5 text-amber-500" />
-                  <span>উমরাহ নির্দেশিকা</span>
-                </Link>
-                <Link
-                  href="/settings"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50"
-                >
-                  <Settings className="w-5 h-5 text-gray-500" />
-                  <span>সেটিংস ও হিসাব পদ্ধতি</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
       </header>
 
       {/* City Selector Modal */}

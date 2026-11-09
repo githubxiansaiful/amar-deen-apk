@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   ArrowLeft,
-  ArrowRight,
-  BookOpen,
   Volume2,
   Copy,
   Bookmark,
@@ -23,15 +21,15 @@ import AudioPlayerBar from '@/components/AudioPlayerBar';
 
 export default function SurahReaderPage() {
   return (
-    <React.Suspense
+    <Suspense
       fallback={
-        <div className="max-w-4xl mx-auto px-4 py-16 text-center text-gray-500">
+        <div className="max-w-2xl mx-auto px-4 py-16 text-center text-xs text-[#8D7E7A]">
           সূরা লোড হচ্ছে...
         </div>
       }
     >
       <SurahReaderContent />
-    </React.Suspense>
+    </Suspense>
   );
 }
 
@@ -46,8 +44,6 @@ function SurahReaderContent() {
   const [copiedAyah, setCopiedAyah] = useState<number | null>(null);
   const [bookmarkedAyah, setBookmarkedAyah] = useState<number | null>(null);
   const [showContext, setShowContext] = useState(false);
-
-  // Audio player state
   const [playingAyah, setPlayingAyah] = useState<Ayah | null>(null);
 
   useEffect(() => {
@@ -58,7 +54,6 @@ function SurahReaderContent() {
 
     setLoading(true);
 
-    // Fetch surah list for metadata
     fetch('/data/quran/surahs.json')
       .then((res) => res.json())
       .then((list: SurahMeta[]) => {
@@ -66,7 +61,6 @@ function SurahReaderContent() {
         if (found) setSurahMeta(found);
       });
 
-    // Fetch ayahs
     fetch(`/data/quran/surah_${surahId}.json`)
       .then((res) => res.json())
       .then((data: Ayah[]) => {
@@ -74,7 +68,7 @@ function SurahReaderContent() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Failed to load surah ayahs', err);
+        console.error('Failed to load ayahs', err);
         setLoading(false);
       });
   }, [surahId, router]);
@@ -120,118 +114,114 @@ function SurahReaderContent() {
 
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-12 space-y-6 animate-pulse">
-        <div className="h-40 bg-gray-200 rounded-3xl" />
-        <div className="h-28 bg-gray-200 rounded-2xl" />
-        <div className="h-28 bg-gray-200 rounded-2xl" />
+      <div className="max-w-2xl mx-auto px-4 py-8 space-y-4 animate-pulse">
+        <div className="h-44 bg-white rounded-3xl border border-[#E6DFD3]" />
+        <div className="h-32 bg-white rounded-3xl border border-[#E6DFD3]" />
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 pb-32 space-y-8">
-      {/* Navigation Top Bar */}
+    <div className="max-w-2xl mx-auto px-4 py-4 sm:py-6 pb-32 space-y-4">
+      {/* 1. Top Bar */}
       <div className="flex items-center justify-between">
         <Link
           href="/quran"
-          className="inline-flex items-center space-x-1.5 text-xs sm:text-sm font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 px-3.5 py-2 rounded-xl transition"
+          className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-white border border-[#E6DFD3] text-xs font-bold text-[#047857] hover:bg-[#FAF8F3] transition shadow-2xs"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-3.5 h-3.5" />
           <span>সকল সূরা</span>
         </Link>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1.5">
           {surahId > 1 && (
             <Link
               href={`/quran/${surahId - 1}`}
-              className="px-3 py-1.5 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
+              className="px-2.5 py-1.5 bg-white border border-[#E6DFD3] rounded-xl text-xs font-bold text-[#2C2523] hover:bg-[#FAF8F3]"
             >
-              পূর্ববর্তী সূরা
+              পূর্ববর্তী
             </Link>
           )}
           {surahId < 114 && (
             <Link
               href={`/quran/${surahId + 1}`}
-              className="px-3 py-1.5 rounded-xl border border-gray-200 text-xs font-medium text-gray-700 hover:bg-gray-50 transition"
+              className="px-2.5 py-1.5 bg-white border border-[#E6DFD3] rounded-xl text-xs font-bold text-[#2C2523] hover:bg-[#FAF8F3]"
             >
-              পরবর্তী সূরা
+              পরবর্তী
             </Link>
           )}
         </div>
       </div>
 
-      {/* Surah Header Card */}
-      <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-950 via-emerald-900 to-teal-950 text-white p-6 sm:p-10 shadow-xl border border-emerald-800 text-center">
-        <div className="space-y-2">
-          <div className="font-arabic text-4xl sm:text-5xl text-amber-300 drop-shadow-md">
-            {surahMeta?.name}
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            সূরা {surahMeta?.bengaliName}
-          </h1>
-          <p className="text-emerald-200 text-xs sm:text-sm">
-            {surahMeta?.englishName} • {surahMeta?.englishNameTranslation}
-          </p>
+      {/* 2. Surah Header Card (matching Android app) */}
+      <div className="bg-white rounded-3xl p-6 border border-[#E6DFD3] shadow-xs text-center space-y-2">
+        <div className="font-arabic text-4xl text-[#047857]">
+          {surahMeta?.name}
+        </div>
+        <h1 className="text-xl sm:text-2xl font-black text-[#2C2523]">
+          সূরা {surahMeta?.bengaliName}
+        </h1>
+        <p className="text-xs text-[#6E615D] font-medium">
+          {surahMeta?.englishName} • {surahMeta?.englishNameTranslation}
+        </p>
 
-          <div className="flex items-center justify-center space-x-2 pt-2 text-xs">
-            <span className="px-3 py-1 rounded-full bg-emerald-800/80 border border-emerald-700 text-emerald-200">
-              {surahMeta?.revelationType === 'Meccan' ? 'মাক্কী সূরা' : 'মাদানী সূরা'}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-emerald-800/80 border border-emerald-700 text-emerald-200">
-              মোট আয়াত: {toBengaliDigits(ayahs.length)}
-            </span>
-          </div>
+        <div className="flex items-center justify-center space-x-2 pt-1 text-xs">
+          <span className="px-2.5 py-1 rounded-lg bg-[#FAF8F3] border border-[#E6DFD3] text-[#2C2523] font-bold">
+            {surahMeta?.revelationType === 'Meccan' ? 'মাক্কী সূরা' : 'মাদানী সূরা'}
+          </span>
+          <span className="px-2.5 py-1 rounded-lg bg-[#FAF8F3] border border-[#E6DFD3] text-[#2C2523] font-bold">
+            মোট আয়াত: {toBengaliDigits(ayahs.length)}
+          </span>
         </div>
 
-        {/* Context Button */}
         {contextData && (
-          <div className="mt-6 pt-4 border-t border-emerald-800/60">
+          <div className="pt-2">
             <button
               onClick={() => setShowContext(!showContext)}
-              className="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-amber-400/20 text-amber-300 hover:bg-amber-400/30 text-xs font-semibold transition cursor-pointer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-[#FFFBEB] text-[#D97706] hover:bg-[#FEF3C7] text-xs font-bold transition cursor-pointer border border-[#FDE68A]"
             >
-              <Info className="w-4 h-4" />
+              <Info className="w-3.5 h-3.5" />
               <span>
-                {showContext ? 'প্রেক্ষাপট ও ফজিলত লুকান' : 'শানে নুযূল, নামকরণ ও ফজিলত দেখুন'}
+                {showContext ? 'প্রেক্ষাপট লুকান' : 'শানে নুযূল ও ফজিলত'}
               </span>
-              {showContext ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              {showContext ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
           </div>
         )}
       </div>
 
-      {/* Surah Context Details (Expandable) */}
+      {/* Context Details */}
       {contextData && showContext && (
-        <div className="bg-amber-50/70 border border-amber-200/80 rounded-3xl p-6 sm:p-8 space-y-4 text-xs sm:text-sm text-gray-800 animate-in fade-in duration-200">
+        <div className="bg-[#FFFBEB] border border-[#FDE68A] rounded-3xl p-5 space-y-3 text-xs text-[#2C2523]">
           <div>
-            <h3 className="font-bold text-amber-900 text-base mb-1">নামকরণ:</h3>
-            <p className="leading-relaxed text-gray-700">{contextData.namkoron}</p>
+            <span className="font-bold text-[#D97706] block mb-0.5">নামকরণ:</span>
+            <p className="text-[#6E615D] leading-relaxed">{contextData.namkoron}</p>
           </div>
           <div>
-            <h3 className="font-bold text-amber-900 text-base mb-1">শানে নুযূল (অবতরণের পটভূমি):</h3>
-            <p className="leading-relaxed text-gray-700">{contextData.shaneNuzul}</p>
+            <span className="font-bold text-[#D97706] block mb-0.5">শানে নুযূল:</span>
+            <p className="text-[#6E615D] leading-relaxed">{contextData.shaneNuzul}</p>
           </div>
           <div>
-            <h3 className="font-bold text-amber-900 text-base mb-1">ফজিলত ও গুরুত্ব:</h3>
-            <p className="leading-relaxed text-gray-700">{contextData.fazilat}</p>
+            <span className="font-bold text-[#D97706] block mb-0.5">ফজিলত:</span>
+            <p className="text-[#6E615D] leading-relaxed">{contextData.fazilat}</p>
           </div>
         </div>
       )}
 
-      {/* Bismillah Header (Except Surah 9) */}
+      {/* 3. Bismillah Banner (except Surah 9) */}
       {surahId !== 9 && (
-        <div className="text-center py-6 bg-white rounded-2xl border border-gray-100 shadow-xs">
-          <div className="font-arabic text-2xl sm:text-3xl text-emerald-900">
+        <div className="text-center py-4 px-3 bg-white rounded-2xl border border-[#E6DFD3] shadow-xs">
+          <div className="font-arabic text-2xl text-[#047857]">
             بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
           </div>
-          <div className="text-xs text-gray-500 mt-1">
+          <div className="text-[11px] text-[#6E615D] mt-0.5">
             শুরু করছি আল্লাহর নামে যিনি পরম করুণাময়, অতি দয়ালু
           </div>
         </div>
       )}
 
-      {/* Verses List */}
-      <div className="space-y-6">
+      {/* 4. Ayah Cards (exact matching Android app) */}
+      <div className="space-y-3">
         {ayahs.map((ayah) => {
           const isPlayingThis = playingAyah?.numberInSurah === ayah.numberInSurah;
           const isCopied = copiedAyah === ayah.numberInSurah;
@@ -241,28 +231,28 @@ function SurahReaderContent() {
             <article
               key={ayah.numberInSurah}
               id={`ayah-${ayah.numberInSurah}`}
-              className={`bg-white rounded-3xl p-5 sm:p-7 border transition-all duration-200 ${
+              className={`bg-white rounded-3xl p-4 sm:p-5 border transition-all duration-150 ${
                 isPlayingThis
-                  ? 'border-emerald-500 shadow-md ring-2 ring-emerald-500/20'
-                  : 'border-gray-100 shadow-xs hover:border-gray-200'
+                  ? 'border-[#047857] ring-2 ring-[#047857]/20 shadow-md'
+                  : 'border-[#E6DFD3] shadow-xs'
               }`}
             >
-              {/* Verse Top Bar: Number & Actions */}
-              <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-                <span className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 font-extrabold flex items-center justify-center text-xs border border-emerald-100">
+              {/* Header: Ayah Number Badge & Actions */}
+              <div className="flex items-center justify-between pb-3 border-b border-[#E6DFD3]/60">
+                <span className="w-8 h-8 rounded-xl bg-[#FAF8F3] border border-[#E6DFD3] text-[#2C2523] font-black flex items-center justify-center text-xs">
                   {toBengaliDigits(ayah.numberInSurah)}
                 </span>
 
-                <div className="flex items-center space-x-1.5">
+                <div className="flex items-center space-x-1">
                   {ayah.audioUrl && (
                     <button
                       onClick={() => setPlayingAyah(ayah)}
-                      className={`p-2 rounded-xl transition cursor-pointer ${
+                      className={`p-1.5 rounded-lg transition cursor-pointer ${
                         isPlayingThis
-                          ? 'bg-amber-400 text-emerald-950 font-bold'
-                          : 'text-gray-500 hover:text-emerald-700 hover:bg-emerald-50'
+                          ? 'bg-[#047857] text-white'
+                          : 'text-[#6E615D] hover:text-[#047857] hover:bg-[#ECFDF5]'
                       }`}
-                      title="তেলাওয়াত শুনুন"
+                      title="তেলাওয়াত"
                     >
                       <Volume2 className="w-4 h-4" />
                     </button>
@@ -270,11 +260,11 @@ function SurahReaderContent() {
 
                   <button
                     onClick={() => handleCopyAyah(ayah)}
-                    className="p-2 text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-xl transition cursor-pointer"
-                    title="অনুলিপি করুন"
+                    className="p-1.5 text-[#6E615D] hover:text-[#047857] hover:bg-[#ECFDF5] rounded-lg transition cursor-pointer"
+                    title="অনুলিপি"
                   >
                     {isCopied ? (
-                      <Check className="w-4 h-4 text-emerald-600" />
+                      <Check className="w-4 h-4 text-[#047857]" />
                     ) : (
                       <Copy className="w-4 h-4" />
                     )}
@@ -282,11 +272,11 @@ function SurahReaderContent() {
 
                   <button
                     onClick={() => handleBookmarkAyah(ayah)}
-                    className="p-2 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-xl transition cursor-pointer"
-                    title="এখানে বুকমার্ক করুন"
+                    className="p-1.5 text-[#6E615D] hover:text-[#D97706] hover:bg-[#FFFBEB] rounded-lg transition cursor-pointer"
+                    title="বুকমার্ক"
                   >
                     {isBookmarked ? (
-                      <Check className="w-4 h-4 text-amber-600" />
+                      <Check className="w-4 h-4 text-[#D97706]" />
                     ) : (
                       <Bookmark className="w-4 h-4" />
                     )}
@@ -295,26 +285,28 @@ function SurahReaderContent() {
               </div>
 
               {/* Arabic Verse Text */}
-              <div className="py-6 text-right font-arabic text-2xl sm:text-3xl text-gray-900 leading-loose">
+              <div className="py-4 text-right font-arabic text-2xl sm:text-3xl text-[#2C2523] leading-loose">
                 {ayah.text}
               </div>
 
-              {/* Bengali Pronunciation & Translation */}
-              <div className="space-y-3 pt-3 border-t border-gray-100 text-sm">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-amber-700 block mb-0.5">
-                    উচ্চারণ:
+              {/* Pronunciation & Translation Strips matching Android app */}
+              <div className="space-y-2 pt-2">
+                {/* Pronunciation Strip */}
+                <div className="bg-[#F5EFE4] rounded-2xl p-3 border border-[#E6DFD3]/60">
+                  <span className="text-[10px] font-bold text-[#D97706] uppercase tracking-wider block mb-0.5">
+                    উচ্চারণ
                   </span>
-                  <p className="text-gray-700 font-medium leading-relaxed">
+                  <p className="text-xs sm:text-sm font-medium text-[#2C2523] leading-relaxed">
                     {ayah.pronunciationBn}
                   </p>
                 </div>
 
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 block mb-0.5">
-                    অনুবাদ:
+                {/* Translation Strip */}
+                <div className="bg-[#FAF7EE] rounded-2xl p-3 border border-[#E6DFD3]/60">
+                  <span className="text-[10px] font-bold text-[#047857] uppercase tracking-wider block mb-0.5">
+                    অনুবাদ
                   </span>
-                  <p className="text-gray-900 font-semibold leading-relaxed">
+                  <p className="text-xs sm:text-sm font-bold text-[#2C2523] leading-relaxed">
                     {ayah.translationBn}
                   </p>
                 </div>

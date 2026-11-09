@@ -2,7 +2,15 @@
 
 import React from 'react';
 import { PrayerTimeItem } from '@/lib/types';
-import { CheckCircle2, Clock } from 'lucide-react';
+import {
+  Sunrise,
+  Sun,
+  Sunset,
+  Moon,
+  CloudSun,
+  Bell,
+  AlertTriangle,
+} from 'lucide-react';
 
 interface PrayerTimesTableProps {
   prayers: PrayerTimeItem[];
@@ -17,116 +25,140 @@ export default function PrayerTimesTable({
   prayers,
   forbiddenTimes,
 }: PrayerTimesTableProps) {
+  const getPrayerIconInfo = (id: string) => {
+    switch (id) {
+      case 'fajr':
+        return {
+          icon: Sunrise,
+          bg: 'rgba(14, 165, 233, 0.12)',
+          color: '#0284C7',
+        };
+      case 'sunrise':
+        return {
+          icon: Sunrise,
+          bg: 'rgba(245, 158, 11, 0.12)',
+          color: '#D97706',
+        };
+      case 'dhuhr':
+        return {
+          icon: Sun,
+          bg: 'rgba(245, 158, 11, 0.15)',
+          color: '#D97706',
+        };
+      case 'asr':
+        return {
+          icon: CloudSun,
+          bg: 'rgba(249, 115, 22, 0.12)',
+          color: '#EA580C',
+        };
+      case 'maghrib':
+        return {
+          icon: Sunset,
+          bg: 'rgba(139, 92, 246, 0.12)',
+          color: '#7C3AED',
+        };
+      case 'isha':
+      default:
+        return {
+          icon: Moon,
+          bg: 'rgba(99, 102, 241, 0.12)',
+          color: '#4F46E5',
+        };
+    }
+  };
+
   return (
-    <div className="space-y-6">
-      {/* 5 Daily Prayers + Sunrise Grid */}
-      <div className="bg-white rounded-3xl p-6 shadow-xs border border-gray-100">
-        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center space-x-2">
-          <Clock className="w-5 h-5 text-emerald-600" />
-          <span>দৈনিক ৫ ওয়াক্ত নামাজের সময়</span>
-        </h2>
+    <div className="space-y-4">
+      {/* 5 Daily Prayers List Card */}
+      <div className="bg-white rounded-3xl border border-[#E6DFD3] shadow-xs overflow-hidden divide-y divide-[#E6DFD3]/60">
+        {prayers.map((prayer) => {
+          const { icon: Icon, bg, color } = getPrayerIconInfo(prayer.id);
+          const isCurrent = prayer.isCurrent;
+          const isNext = prayer.isNext;
 
-        <div className="divide-y divide-gray-100">
-          {prayers.map((prayer) => {
-            const isSunrise = prayer.id === 'sunrise';
-            const isCurrent = prayer.isCurrent;
-            const isNext = prayer.isNext;
+          return (
+            <div
+              key={prayer.id}
+              className={`px-4 sm:px-5 py-3.5 flex items-center justify-between transition ${
+                isCurrent ? 'bg-[#ECFDF5]/60' : 'hover:bg-[#FAF8F3]/60'
+              }`}
+            >
+              {/* Left: Circular icon + Name + Ongoing badge */}
+              <div className="flex items-center space-x-3.5">
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                  style={{ backgroundColor: bg }}
+                >
+                  <Icon className="w-5 h-5" style={{ color }} />
+                </div>
 
-            return (
-              <div
-                key={prayer.id}
-                className={`py-3.5 px-3 rounded-2xl flex items-center justify-between transition ${
-                  isCurrent
-                    ? 'bg-emerald-50 text-emerald-950 font-semibold border border-emerald-200/80 shadow-xs'
-                    : isNext
-                    ? 'bg-amber-50/60 text-amber-950 font-medium'
-                    : 'text-gray-800 hover:bg-gray-50'
-                }`}
-              >
-                {/* Left: Prayer Name & Arabic */}
-                <div className="flex items-center space-x-3 sm:space-x-4">
-                  <div
-                    className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm ${
-                      isCurrent
-                        ? 'bg-emerald-600 text-white'
-                        : isNext
-                        ? 'bg-amber-500 text-white'
-                        : isSunrise
-                        ? 'bg-orange-100 text-orange-700'
-                        : 'bg-gray-100 text-gray-600'
-                    }`}
-                  >
-                    {prayer.nameBn.charAt(0)}
-                  </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-base font-bold text-[#2C2523]">
+                      {prayer.nameBn}
+                    </span>
 
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-base sm:text-lg font-bold">
-                        {prayer.nameBn}
+                    {isCurrent && (
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#047857]/15 text-[#047857]">
+                        ● চলমান
                       </span>
-                      <span className="text-xs font-arabic text-gray-400">
-                        {prayer.nameAr}
+                    )}
+
+                    {isNext && (
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#D97706]/15 text-[#D97706]">
+                        পরবর্তী
                       </span>
-                      {isCurrent && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-600 text-white animate-pulse">
-                          চলমান
-                        </span>
-                      )}
-                      {isNext && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500 text-white">
-                          পরবর্তী
-                        </span>
-                      )}
-                    </div>
-                    {prayer.endTimeFormatted && (
-                      <div className="text-xs text-gray-400 mt-0.5">
-                        শেষ সময়: {prayer.endTimeFormatted}
-                      </div>
                     )}
                   </div>
-                </div>
 
-                {/* Right: Start Time */}
-                <div className="text-right">
-                  <span
-                    className={`text-lg sm:text-xl font-bold tracking-tight ${
-                      isCurrent
-                        ? 'text-emerald-700'
-                        : isNext
-                        ? 'text-amber-600'
-                        : 'text-gray-900'
-                    }`}
-                  >
-                    {prayer.timeFormatted}
-                  </span>
+                  {prayer.endTimeFormatted && (
+                    <div className="text-[11px] text-[#8D7E7A] mt-0.5">
+                      শেষ সময়: {prayer.endTimeFormatted}
+                    </div>
+                  )}
                 </div>
               </div>
-            );
-          })}
-        </div>
+
+              {/* Right: Time & Alert indicator */}
+              <div className="flex items-center space-x-3">
+                <span
+                  className={`text-base sm:text-lg font-bold tracking-tight ${
+                    isCurrent ? 'text-[#047857]' : 'text-[#2C2523]'
+                  }`}
+                >
+                  {prayer.timeFormatted} মি.
+                </span>
+
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-[#8D7E7A] hover:text-[#047857] transition">
+                  <Bell className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Forbidden Times (হারাম ওয়াক্ত) */}
       {forbiddenTimes && forbiddenTimes.length > 0 && (
-        <div className="bg-red-50/70 border border-red-200/80 rounded-3xl p-6">
-          <div className="flex items-center space-x-2 text-red-800 font-bold mb-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-600" />
-            <h3 className="text-base">নামাজের নিষিদ্ধ সময়সমূহ (হারাম ওয়াক্ত)</h3>
+        <div className="bg-[#FFF5F5] border border-[#FED7D7] rounded-3xl p-5 space-y-3">
+          <div className="flex items-center space-x-2 text-[#C53030] font-bold text-sm">
+            <AlertTriangle className="w-4 h-4 text-[#E53E3E]" />
+            <span>নামাজের নিষিদ্ধ সময়সমূহ (হারাম ওয়াক্ত)</span>
           </div>
-          <p className="text-xs text-red-700 mb-4">
-            রাসূলুল্লাহ ﷺ এই তিন সময়ে যেকোনো ফরজ বা নফল নামাজ আদায় করতে নিষেধ করেছেন (ঐ দিনের আসর বাদে):
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
             {forbiddenTimes.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-4 border border-red-100 shadow-xs"
+                className="bg-white rounded-2xl p-3 border border-[#FED7D7] shadow-2xs"
               >
-                <div className="text-sm font-bold text-gray-900">{item.nameBn}</div>
-                <div className="text-base font-extrabold text-red-600 my-1">
+                <div className="text-xs font-bold text-[#2C2523]">
+                  {item.nameBn}
+                </div>
+                <div className="text-sm font-extrabold text-[#E53E3E] my-1">
                   {item.rangeFormatted}
                 </div>
-                <div className="text-xs text-gray-500 leading-relaxed">
+                <div className="text-[11px] text-[#718096] leading-tight">
                   {item.description}
                 </div>
               </div>
